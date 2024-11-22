@@ -5,7 +5,7 @@ Redis est une base de données NoSQL de type clé-valeur, on l'utilise pour mani
 Il stocke des informations sous forme de **paires clé-valeur**. Chaque donnée est associée à une "clé" unique. 
 Redis est souvent utilisé pour stocker des informations temporaires, comme le nombre de visites d’un site web ou des sessions utilisateurs.
 
-## Installation et Démarrage
+## Démarrage
 Pour commencer à utiliser Redis, on lance le **serveur Redis** à l’aide de la commande :
 
 ```bash
@@ -192,10 +192,8 @@ Les hashes sont très pratiques pour stocker des objets structurés sans schéma
 
 # Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 3)
 
-Dans cette troisième partie sur Redis, nous allons nous pencher sur une autre fonctionnalité importante de Redis : les **pub/sub** (publication/souscription), ainsi que la gestion des **clés et bases de données**.
-
 ## Publication/Souscription (Pub/Sub)
-Les **pub/sub** sont une structure de données très utilisée dans Redis, particulièrement adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications, ou inscriptions sur différents canaux de communication.
+Les **pub/sub** sont une structure de données bien adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications, ou inscriptions sur différents canaux de communication.
 
 Pour tester la fonctionnalité pub/sub, nous devons avoir plusieurs clients connectés au même serveur Redis.
 
@@ -211,7 +209,7 @@ Pour tester la fonctionnalité pub/sub, nous devons avoir plusieurs clients conn
     redis-cli
     ```
 
-    Ce client peut **souscrire** à un canal, par exemple "mes cours" :
+    Le client **souscrit** à un canal, par exemple "mes cours" :
 
     ```bash
     SUBSCRIBE mes_cours
