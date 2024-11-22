@@ -188,3 +188,82 @@ HINCRBY user:404 age 4
 Cela incrémente l'âge de 4, passant de 25 à 29.
 
 Les hashes sont très pratiques pour stocker des objets structurés sans schéma fixe, et permettent de regrouper plusieurs informations sous une seule clé.
+
+
+# Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 3)
+
+Dans cette troisième partie sur Redis, nous allons nous pencher sur une autre fonctionnalité importante de Redis : les **pub/sub** (publication/souscription), ainsi que la gestion des **clés et bases de données**.
+
+## Publication/Souscription (Pub/Sub)
+Les **pub/sub** sont une structure de données très utilisée dans Redis, particulièrement adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications, ou inscriptions sur différents canaux de communication.
+
+Pour tester la fonctionnalité pub/sub, nous devons avoir plusieurs clients connectés au même serveur Redis.
+
+1. Pour commencer, on démarre le serveur Redis :
+
+    ```bash
+    redis-server
+    ```
+
+2. Ensuite, on se connecte avec un premier client :
+
+    ```bash
+    redis-cli
+    ```
+
+    Ce client peut **souscrire** à un canal, par exemple "mes cours" :
+
+    ```bash
+    SUBSCRIBE mes_cours
+    ```
+
+    Le client reste à l'écoute des messages qui seront envoyés sur ce canal.
+
+3. Avec un deuxième client connecté au même serveur Redis, on peut **publier un message** sur le canal "mes cours" :
+
+    ```bash
+    PUBLISH mes_cours "Nouveau cours disponible sur la plateforme"
+    ```
+
+    Le premier client reçoit instantanément ce message, de manière **temps réel**. Tous les clients inscrits au canal "mes cours" recevront ce message.
+
+On peut aussi **souscrire à plusieurs canaux** en utilisant des motifs (patterns) avec `PSUBSCRIBE`. Par exemple, pour s'inscrire à tous les canaux commençant par "mes" :
+
+```bash
+PSUBSCRIBE mes*
+```
+
+Ainsi, ce client recevra tous les messages des canaux correspondant au motif "mes*".
+
+## Gestion des Clés et Bases de Données
+Redis permet aussi une gestion efficace des clés et bases de données.
+
+- Pour **afficher toutes les clés** définies lors de la session, on utilise la commande `KEYS` :
+
+    ```bash
+    KEYS *
+    ```
+
+    Cela renvoie la liste de toutes les clés existantes dans la base de données courante.
+
+- Par défaut, Redis offre **16 bases de données**, numérotées de 0 à 15. Pour **changer de base de données**, on utilise la commande `SELECT` :
+
+    ```bash
+    SELECT 1
+    ```
+
+    Cela permet de passer à la base de données numéro 1. Pour vérifier les clés présentes dans cette base de données :
+
+    ```bash
+    KEYS *
+    ```
+
+    Si aucune clé n'a été définie dans cette base, le résultat sera vide.
+
+Pour revenir à la base de données par défaut (la base numéro 0) :
+
+```bash
+SELECT 0
+```
+
+Par défaut, Redis n'écrit pas immédiatement les données sur disque. Cela signifie qu'en cas de panne, **toutes les données récentes peuvent être perdues**. Il est essentiel de configurer correctement Redis si l'on souhaite garantir la persistance des données, en activant les options d'écriture sur disque.
