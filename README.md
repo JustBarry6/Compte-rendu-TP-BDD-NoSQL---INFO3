@@ -124,7 +124,7 @@ Cette commande renvoie un ensemble contenant tous les éléments uniques des deu
 # Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 2)
 
 ## Sets Ordonnés (Sorted Sets)
-Les **sets ordonnés** sont une autre structure de données que Redis propose. Ils permettent de **classer des éléments avec un score associé**. Par exemple, ils sont souvent utilisés dans le cadre de systèmes de recommandation, pour classer des utilisateurs par score.
+Les **sets ordonnés** sont une autre structure de données qui permettent de **classer des éléments avec un score associé**, on les utilise souvent dans le cadre de systèmes de recommandation, pour classer des utilisateurs par score.
 
 Pour définir un set ordonné, on utilise la commande `ZADD` (au lieu de `SADD` pour les sets non ordonnés) :
 
@@ -134,7 +134,7 @@ ZADD scores 18 "Inès"
 ZADD scores 8 "Samir"
 ```
 
-Dans cet exemple, chaque utilisateur est associé à un score. Pour **récupérer les éléments**, on utilise `ZRANGE`, de la même manière que `LRANGE` pour les listes :
+Ici, chaque utilisateur est associé à un score. Pour **récupérer les éléments**, on utilise `ZRANGE`, de la même manière que `LRANGE` pour les listes :
 
 ```bash
 ZRANGE scores 0 -1
@@ -152,12 +152,12 @@ Si l'on souhaite **connaître la position d'un élément** dans le classement, o
 ZRANK scores "Augustin"
 ```
 
-Cette commande renvoie l'indice de "Augustin" dans le set, en ordre croissant de score.
+ça renvoie l'indice de "Augustin" dans le set, en ordre croissant de score.
 
-Les sets ordonnés sont particulièrement utiles pour **classer des éléments** et effectuer des recherches basées sur des scores, souvent en tant que cache pour des bases de données relationnelles, permettant ainsi d'accélérer les accès aux données.
+Les sets ordonnés sont utiles pour **classer des éléments** et effectuer des recherches basées sur des scores, souvent en tant que cache pour des bases de données relationnelles, permettant ainsi d'accélérer les accès aux données.
 
 ## Les Hashes
-Les **hashes** sont une autre structure de données très utilisée dans Redis. Ils sont comparables à des **objets ou des dictionnaires** en programmation : une clé n'a pas seulement une valeur, mais une collection de paires champ-valeur.
+Les **hashes** sont une autre structure de données comparables à des **objets ou des dictionnaires** en programmation : une clé n'a pas seulement une valeur, mais une collection de paires champ-valeur.
 
 Pour définir un hash, on utilise la commande `HSET` :
 
