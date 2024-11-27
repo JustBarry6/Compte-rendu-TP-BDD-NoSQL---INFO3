@@ -1,23 +1,22 @@
 # Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 1)
 
-
-Redis est une base de données NoSQL de type clé-valeur, on l'utilise pour manipulations rapides en mémoire et pouvant aussi persister des données sur disque.
-Il stocke des informations sous forme de **paires clé-valeur**. Chaque donnée est associée à une "clé" unique. 
-Redis est souvent utilisé pour stocker des informations temporaires, comme le nombre de visites d’un site web ou des sessions utilisateurs.
+Redis est une base de données NoSQL de type clé-valeur.
+Il stocke des informations sous forme de **paires clé-valeur**. Chaque donnée est associée à une "clé" unique.
 
 ## Démarrage
-Pour commencer à utiliser Redis, on lance le **serveur Redis** à l’aide de la commande :
+
+Pour commencer à utiliser Redis, on lance deux terminaux : dans le premier, on lance le **serveur Redis** à l’aide de la commande :
 
 ```bash
 redis-server
 ```
 
-Ensuite, pour communiquer avec Redis, un **client CLI** est utilisé :
+Ensuite, dans le second terminal, pour communiquer avec Redis, on utilise un **client CLI** avec la commande :
 
 ```bash
 redis-cli
 ```
-
+Cela nous place sur le serveur localhost `127.0.0.1` au port par défaut qui est le `6379`.
 Ce client est comme une console qui permet d'envoyer des commandes au serveur pour interagir avec la base de données.
 
 ## Commandes CRUD
@@ -28,32 +27,38 @@ Redis permet d'effectuer des opérations **CRUD** :
   ```bash
   SET demo "bonjour"
   ```
+  
+  Crée une clé nommée "demo" ayant pour valeur "bonjour". Le serveur répond "OK" si tout se passe bien.
 
-  Crée une clé nommée "demo" ayant pour valeur "bonjour".
-
-- **Read** : Lire la valeur d’une clé avec la commande :
+  On peut aussi définir une clé en l'associant avec une valeur définie :
 
   ```bash
-  GET demo
+  SET user:1234 "abdoulaye"
   ```
 
-  Cette commande retourne "bonjour".
+- **Read** : Lire la valeur de la clé avec la commande :
+
+  ```bash
+  GET user:1234
+  ```
+  
+  Cette commande retourne "abdoulaye".
 
 - **Update** : Modifier la valeur d'une clé existante :
 
   ```bash
-  SET demo "salut"
+  SET user:1234 "barry"
   ```
-
-  Cette commande met à jour la valeur de la clé "demo".
+  
+  Cette commande met à jour la valeur de la clé "user:1234" avec "barry".
 
 - **Delete** : Supprimer une clé :
 
   ```bash
   DEL demo
   ```
-
-  Supprime la clé "demo".
+  
+  Supprime la clé "demo" et renvoie `1` pour indiquer que tout s'est bien passé ou `0` sinon.
 
 ## Persistance des Données
 Redis stocke les données en **RAM** pour des accès rapides. Pour éviter la perte de données en cas de panne, il propose des options de persistance sur disque avec des configurations spécifiques.
@@ -61,19 +66,25 @@ Redis stocke les données en **RAM** pour des accès rapides. Pour éviter la pe
 ## Gestion des Compteurs
 On utilise souvent Redis pour des tâches comme **compter des visiteurs** sur un site web. Pour cela :
 
-- On définit une clé avec un compteur initial à 0 :
+- On définit une clé et initialise le compteur à `0` :
 
   ```bash
-  SET date 0
+  SET 1mars 0
   ```
 
 - Ensuite, on peut incrémenter cette valeur :
 
   ```bash
-  INCR date
+  INCR 1mars
   ```
 
-  Cela incrémente le compteur à chaque nouvelle visite.
+- Pour décrémenter la valeur :
+
+  ```bash
+  DECR 1mars
+  ```
+  
+  Cela décrémente le compteur.
 
 Redis gère aussi la **concurrence**, c’est-à-dire les situations où plusieurs utilisateurs se connectent simultanément et essayent de modifier la même valeur.
 
@@ -84,7 +95,7 @@ On peut définir une **durée de vie pour une clé** avec la commande `EXPIRE` :
 EXPIRE ma_cle 120
 ```
 
-Cette commande indique que la clé "ma_cle" expirera après 120 secondes. Pour savoir la durée de vie restante d'une clé, on utilise `TTL` :
+Cette commande indique que la clé "ma_cle" expirera après `120` secondes. Pour savoir la durée de vie restante d'une clé, on utilise `TTL` :
 
 ```bash
 TTL ma_cle
@@ -95,11 +106,27 @@ Redis offre plusieurs structures de données différentes :
 
 ### 1. Les Listes
 - On peut insérer des éléments avec `LPUSH` (insertion à gauche) et `RPUSH` (insertion à droite).
-- Pour lire les éléments d'une liste, on utilise `LRANGE`, en précisant l'indice de début et de fin :
+  
+  ```bash
+  RPUSH mesCours "BDA"
+  RPUSH mesCours "Service Web"
+  ```
+
+- Pour lire les éléments de la liste, on utilise `LRANGE`, en précisant l'indice de début et de fin :
 
   ```bash
-  LRANGE ma_liste 0 -1
+  LRANGE mesCours 0 -1
   ```
+  
+  Cela nous donne comme résultat tous les éléments (grâce à `-1`) : "BDA", "Service Web".
+  
+  ```bash
+  LRANGE mesCours 0 0
+  ```
+  
+  Donne uniquement le premier élément de la liste.
+
+- Pour la suppression, on utilise `LPOP mesCours` (gauche) ou `RPOP mesCours` (droite).
 
 ### 2. Les Ensembles (Sets)
 - Les ensembles sont comme des listes, mais **les éléments sont distincts**.
@@ -112,13 +139,13 @@ Redis offre plusieurs structures de données différentes :
 
 - Pour supprimer un élément, on utilise `SREM`.
 
- - Pour réaliser l'**union de deux ensembles**, on utilise la commande `SUNION` :
+- Pour réaliser l'**union de deux ensembles**, on utilise la commande `SUNION` :
 
   ```bash
   SUNION ensemble1 ensemble2
   ```
 
-Cette commande renvoie un ensemble contenant tous les éléments uniques des deux ensembles.
+  Cette commande renvoie un ensemble contenant tous les éléments uniques des deux ensembles.
 
 
 # Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 2)
