@@ -126,7 +126,7 @@ Redis offre plusieurs structures de données différentes :
   
   Donne uniquement le premier élément de la liste.
 
-- Pour la suppression, on utilise `LPOP mesCours` (gauche) ou `RPOP mesCours` (droite).
+- Pour la suppression, on utilise `LPOP mesCours` (suppression à gauche) ou `RPOP mesCours` (suppression à droite).
 
 ### 2. Les Ensembles (Sets)
 - Les ensembles sont comme des listes, mais **les éléments sont distincts**.
@@ -137,7 +137,19 @@ Redis offre plusieurs structures de données différentes :
   SMEMBERS mon_ensemble
   ```
 
-- Pour supprimer un élément, on utilise `SREM`.
+  Tous les éléments doivent être distincts. Par exemple, si on tape la commande suivante pour ajouter "Augustin" :
+  
+  ```bash
+  SADD utilisateurs "Augustin"
+  ```
+  
+  Et que l'on tente d'ajouter "Augustin" à nouveau, cela renverra `0` pour indiquer que l'élément n'a pas été ajouté.
+
+- Pour supprimer un élément, on utilise `SREM`, en précisant l'ensemble et la valeur :
+
+  ```bash
+  SREM utilisateurs "Augustin"
+  ```
 
 - Pour réaliser l'**union de deux ensembles**, on utilise la commande `SUNION` :
 
@@ -148,7 +160,7 @@ Redis offre plusieurs structures de données différentes :
   Cette commande renvoie un ensemble contenant tous les éléments uniques des deux ensembles.
 
 
-# Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 2)
+# (Partie 2)
 
 ## Sets Ordonnés (Sorted Sets)
 Les **sets ordonnés** sont une autre structure de données qui permettent de **classer des éléments avec un score associé**, on les utilise souvent dans le cadre de systèmes de recommandation, pour classer des utilisateurs par score.
@@ -217,7 +229,7 @@ Cela incrémente l'âge de 4, passant de 25 à 29.
 Les hashes sont très pratiques pour stocker des objets structurés sans schéma fixe, et permettent de regrouper plusieurs informations sous une seule clé.
 
 
-# Compte-rendu-TP-BDD-NoSQL---INFO3 (Partie 3)
+# (Partie 3)
 
 ## Publication/Souscription (Pub/Sub)
 Les **pub/sub** sont une structure de données bien adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications, ou inscriptions sur différents canaux de communication.
