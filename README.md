@@ -163,7 +163,7 @@ Redis offre plusieurs structures de données différentes :
 # (Partie 2)
 
 ## Sets Ordonnés (Sorted Sets)
-Les **sets ordonnés** sont une autre structure de données qui permettent de **classer des éléments avec un score associé**, on les utilise souvent dans le cadre de systèmes de recommandation, pour classer des utilisateurs par score.
+Les **sets ordonnés** sont une autre structure de données qui permettent de **classer des éléments avec un score associé**.
 
 Pour définir un set ordonné, on utilise la commande `ZADD` (au lieu de `SADD` pour les sets non ordonnés) :
 
@@ -193,7 +193,7 @@ ZRANK scores "Augustin"
 
 ça renvoie l'indice de "Augustin" dans le set, en ordre croissant de score.
 
-Les sets ordonnés sont utiles pour **classer des éléments** et effectuer des recherches basées sur des scores, souvent en tant que cache pour des bases de données relationnelles, permettant ainsi d'accélérer les accès aux données.
+Les sets ordonnés sont utiles pour **classer des éléments** et effectuer des recherches basées sur des scores, souvent en tant que cache pour des bases de données relationnelles.
 
 ## Les Hashes
 Les **hashes** sont une autre structure de données comparables à des **objets ou des dictionnaires** en programmation : une clé n'a pas seulement une valeur, mais une collection de paires champ-valeur.
@@ -232,9 +232,9 @@ Les hashes sont très pratiques pour stocker des objets structurés sans schéma
 # (Partie 3)
 
 ## Publication/Souscription (Pub/Sub)
-Les **pub/sub** sont une structure de données bien adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications, ou inscriptions sur différents canaux de communication.
+Les **pub/sub** sont une structure de données bien adaptée aux **applications temps réel** comme les systèmes de messagerie, notifications.
 
-Pour tester la fonctionnalité pub/sub, nous devons avoir plusieurs clients connectés au même serveur Redis.
+Pour tester la fonctionnalité pub/sub, on doit avoir plusieurs clients connectés au même serveur Redis.
 
 1. Pour commencer, on démarre le serveur Redis :
 
@@ -303,4 +303,4 @@ Pour revenir à la base de données par défaut (la base numéro 0) :
 SELECT 0
 ```
 
-Par défaut, Redis n'écrit pas immédiatement les données sur disque. Cela signifie qu'en cas de panne, **toutes les données récentes peuvent être perdues**. Il est essentiel de configurer correctement Redis si l'on souhaite garantir la persistance des données, en activant les options d'écriture sur disque.
+Par défaut, Redis n'écrit pas immédiatement les données sur disque. Cela signifie qu'en cas de panne, **toutes les données récentes peuvent être perdues**.
