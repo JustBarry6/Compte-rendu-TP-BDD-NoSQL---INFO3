@@ -7,24 +7,24 @@ CouchDB est un système de gestion de bases de données **NoSQL** qui stocke les
 ## Démarrage
 
 ### Exécution via Docker
-Pour lancer CouchDB dans un conteneur Docker, utilisez la commande suivante :
+Pour lancer CouchDB dans un conteneur Docker, on utilise la commande suivante :
 
 ```bash
 docker run -d --name couchdbdemo -e COUCHDB_USER=abdoulaye -e COUCHDB_PASSWORD=barry -p 5984:5984 couchdb
 ```
 
 **Explications :**
-- `-d` : Exécuter en mode détaché.
-- `--name couchdbdemo` : Nommer le conteneur.
-- `-e` : Définir des variables d’environnement (utilisateur et mot de passe).
-- `-p 5984:5984` : Mapper le port **5984** du conteneur sur l’hôte.
+- `-d` : On exécute en mode détaché.
+- `--name couchdbdemo` : On nomme le conteneur.
+- `-e` : On définit des variables d’environnement (utilisateur et mot de passe).
+- `-p 5984:5984` : On mappe le port **5984** du conteneur sur l’hôte.
 
 Cela télécharge l’image **CouchDB** et lance le service.
 
-**Remarque** : Si vous utilisez Docker, pensez à **mapper les volumes** pour éviter la perte de données en cas d’arrêt ou de suppression du conteneur.
+**Remarque** : Si on utilise Docker, il faut penser à **mapper les volumes** pour éviter la perte de données en cas d’arrêt ou de suppression du conteneur.
 
 ### Vérification
-Pour vérifier que le conteneur est en cours d’exécution, utilisez :
+Pour vérifier que le conteneur est en cours d’exécution, on utilise :
 
 ```bash
 docker ps
@@ -52,7 +52,7 @@ curl -X PUT http://abdoulaye:barry@localhost:5984/films
 ```
 
 **Réponse** :  
-Renvoie `{"ok":true}` si la base est créée.
+On renvoie `{"ok":true}` si la base est créée.
 
 ---
 
@@ -62,7 +62,7 @@ Renvoie `{"ok":true}` si la base est créée.
 curl -X GET http://abdoulaye:barry@localhost:5984/films
 ```
 
-Retourne les caractéristiques de la base (nombre de documents, etc.).
+On retourne les caractéristiques de la base (nombre de documents, etc.).
 
 ---
 
@@ -131,7 +131,7 @@ curl -X DELETE http://abdoulaye:barry@localhost:5984/films/doc1
 
 - **Flexibilité des données** : CouchDB permet d'insérer des documents JSON sans schéma préétabli, mais cela peut causer des redondances ou des incohérences si les données ne sont pas structurées correctement.
 - **Versionnage** : Chaque document est versionné via le champ `_rev`, facilitant le suivi des modifications.
-- **Environnement distribué** : CouchDB est adapté pour gérer des données dans un environnement distribué avec des mécanismes de réplication et de tolérance aux pannes.
+- **Environnement distribé** : CouchDB est adapté pour gérer des données dans un environnement distribé avec des mécanismes de réplication et de tolérance aux pannes.
 
 ---
 
