@@ -92,16 +92,6 @@ curl -X POST http://abdoulaye:barry@localhost:5984/films \
 
 Pour insérer une collection de documents à partir d’un fichier `films_couchdb.json` :
 
-**Exemple de structure du fichier :**
-```json
-{
-  "docs": [
-    { "_id": "movie:1", "titre": "Inception", "annee": 2010 },
-    { "_id": "movie:2", "titre": "Matrix", "annee": 1999 }
-  ]
-}
-```
-
 **Commande :**
 ```bash
 curl -X POST http://abdoulaye:barry@localhost:5984/films/_bulk_docs \
@@ -126,15 +116,3 @@ curl -X DELETE http://abdoulaye:barry@localhost:5984/films/doc1
 ```
 
 ---
-
-## Remarques importantes
-
-- **Flexibilité des données** : CouchDB permet d'insérer des documents JSON sans schéma préétabli, mais cela peut causer des redondances ou des incohérences si les données ne sont pas structurées correctement.
-- **Versionnage** : Chaque document est versionné via le champ `_rev`, facilitant le suivi des modifications.
-- **Environnement distribé** : CouchDB est adapté pour gérer des données dans un environnement distribé avec des mécanismes de réplication et de tolérance aux pannes.
-
----
-
-## Conclusion
-
-CouchDB est un système simple, flexible et adapté aux environnements distribués grâce à sa gestion de versionnage, sa tolérance aux pannes et son API REST intuitive. Toutefois, pour éviter les redondances ou incohérences, une bonne structuration des données reste essentielle, même dans un système sans schéma.
