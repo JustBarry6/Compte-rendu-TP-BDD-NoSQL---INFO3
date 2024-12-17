@@ -21,6 +21,8 @@ docker run -d --name couchdbdemo -e COUCHDB_USER=abdoulaye -e COUCHDB_PASSWORD=b
 
 Cela télécharge l’image **CouchDB** et lance le service.
 
+**Remarque** : Si vous utilisez Docker, pensez à **mapper les volumes** pour éviter la perte de données en cas d’arrêt ou de suppression du conteneur.
+
 ### Vérification
 Pour vérifier que le conteneur est en cours d’exécution, utilisez :
 
@@ -35,7 +37,7 @@ CouchDB propose une interface web disponible à l’adresse suivante :
 http://localhost:5984/_utils
 ```
 
-Elle permet de gérer les bases et consulter les documents.
+Elle permet de gérer les bases et consulter les documents. Une documentation locale intégrée est également disponible.
 
 ---
 
@@ -82,12 +84,25 @@ curl -X POST http://abdoulaye:barry@localhost:5984/films \
 -H "Content-Type: application/json"
 ```
 
+**Remarque** : Chaque document possède un champ `_id` unique et un champ `_rev` permettant de suivre les versions des modifications.
+
 ---
 
 ### 4. Insertion massive de documents
 
 Pour insérer une collection de documents à partir d’un fichier `films_couchdb.json` :
 
+**Exemple de structure du fichier :**
+```json
+{
+  "docs": [
+    { "_id": "movie:1", "titre": "Inception", "annee": 2010 },
+    { "_id": "movie:2", "titre": "Matrix", "annee": 1999 }
+  ]
+}
+```
+
+**Commande :**
 ```bash
 curl -X POST http://abdoulaye:barry@localhost:5984/films/_bulk_docs \
 -d @films_couchdb.json \
@@ -108,3 +123,18 @@ curl -X GET http://abdoulaye:barry@localhost:5984/films/movie:10098
 
 ```bash
 curl -X DELETE http://abdoulaye:barry@localhost:5984/films/doc1
+```
+
+---
+
+## Remarques importantes
+
+- **Flexibilité des données** : CouchDB permet d'insérer des documents JSON sans schéma préétabli, mais cela peut causer des redondances ou des incohérences si les données ne sont pas structurées correctement.
+- **Versionnage** : Chaque document est versionné via le champ `_rev`, facilitant le suivi des modifications.
+- **Environnement distribué** : CouchDB est adapté pour gérer des données dans un environnement distribué avec des mécanismes de réplication et de tolérance aux pannes.
+
+---
+
+## Conclusion
+
+CouchDB est un système simple, flexible et adapté aux environnements distribués grâce à sa gestion de versionnage, sa tolérance aux pannes et son API REST intuitive. Toutefois, pour éviter les redondances ou incohérences, une bonne structuration des données reste essentielle, même dans un système sans schéma.
